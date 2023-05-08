@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using cakeslice;
 using UnityEngine;
 using static StackApiRequest;
 
@@ -9,9 +10,10 @@ public class JengaBoxController : MonoBehaviour
     [SerializeField] private JengaBoxConfig _config;
     [SerializeField] private MeshRenderer _renderer;
     [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private Outline _outline;
 
     public StackApiDataElement Data { get; private set; }
-    private Action<StackApiDataElement> _clickCallback;
+    private Action<JengaBoxController> _clickCallback;
 
     private void Awake()
     {
@@ -24,7 +26,7 @@ public class JengaBoxController : MonoBehaviour
         _rigidbody.isKinematic = kinematic;
     }
 
-    public void Set(StackApiDataElement data, Action<StackApiDataElement> clickCallback)
+    public void Set(StackApiDataElement data, Action<JengaBoxController> clickCallback)
     {
         if (!_config)
         {
@@ -44,13 +46,30 @@ public class JengaBoxController : MonoBehaviour
         _rigidbody.mass = _config.GetWeight(data.mastery);
     }
 
+    public void SetOutline(int outline)
+    {
+        if (!_outline)
+            return;
+
+        if (outline < 0)
+        {
+            _outline.enabled = false;
+        }
+        else
+        {
+            _outline.color = outline;
+            _outline.enabled = true;
+        }
+    }
+
     public void Hide()
     {
         gameObject.SetActive(false);
+        SetOutline(-1);
     }
 
     public void Click()
     {
-        _clickCallback?.Invoke(Data);
+        _clickCallback?.Invoke(this);
     }
 }

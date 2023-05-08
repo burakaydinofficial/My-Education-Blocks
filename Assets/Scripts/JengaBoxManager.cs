@@ -12,7 +12,7 @@ public class JengaBoxManager : MonoBehaviour
 
     [NonSerialized] private List<JengaBoxController> _instances = new List<JengaBoxController>();
 
-    public void Set(StackApiRequest.StackApiDataElement[] data, Action<StackApiRequest.StackApiDataElement> clickCallback)
+    public void Set(StackApiRequest.StackApiDataElement[] data, Action<JengaBoxController> clickCallback)
     {
         var instanceIndex = 0;
 

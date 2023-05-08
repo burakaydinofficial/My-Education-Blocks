@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8907480729597436090}
   - component: {fileID: 7561398283454515008}
   - component: {fileID: 4522405219551527184}
+  - component: {fileID: 5930428311255237034}
   m_Layer: 16
   m_Name: JengaBox_Probuilder
   m_TagString: Untagged
@@ -3063,6 +3064,7 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: cd23897230511fd49bac34548b90c3ed, type: 2}
   _renderer: {fileID: 4826480364409095133}
   _rigidbody: {fileID: 4522405219551527184}
+  _outline: {fileID: 5930428311255237034}
 --- !u!114 &7561398283454515008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3092,3 +3094,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5930428311255237034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9213471192969078923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0

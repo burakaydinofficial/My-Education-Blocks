@@ -19,8 +19,10 @@ public class TestMyStackController : MonoBehaviour
     [SerializeField] BoxInfoController _boxInfoController;
     [SerializeField] private LayerMask _clickLayerMask;
 
-    [NonSerialized] private StackApiRequest.StackApiDataElement _selected;
-    [NonSerialized] private StackApiRequest.StackApiDataElement _highlighted;
+    [SerializeField] private bool _highlightWhileSelected = true;
+
+    [NonSerialized] private JengaBoxController _selected;
+    [NonSerialized] private JengaBoxController _highlighted;
 
     private IEnumerator Start()
     {
@@ -57,6 +59,7 @@ public class TestMyStackController : MonoBehaviour
         }
 
         _data = stackApiRequest.Data;
+        Array.Sort(_data, Sorter);
 
         _6ThGradeJengaBoxManager.Set(_data, ClickCallback);
         _7ThGradeJengaBoxManager.Set(_data, ClickCallback);
@@ -65,6 +68,16 @@ public class TestMyStackController : MonoBehaviour
 
         _started = true;
         _starting = false;
+    }
+
+    private static int Sorter(StackApiRequest.StackApiDataElement e1, StackApiRequest.StackApiDataElement e2)
+    {
+        var d = string.CompareOrdinal(e1.domain, e2.domain);
+        if (d != 0) return d;
+        var c = string.CompareOrdinal(e1.cluster, e2.cluster);
+        if (c != 0) return c;
+        var s = string.CompareOrdinal(e1.standardid, e2.standardid);
+        return s;
     }
 
     private void Update()
@@ -94,12 +107,16 @@ public class TestMyStackController : MonoBehaviour
                 var controller = hit.transform.GetComponent<JengaBoxController>();
                 if (controller)
                 {
-                    ClickCallback(controller.Data);
+                    ClickCallback(controller);
                 }
                 else
                 {
                     Debug.LogError("Raycast interrupted");
                 }
+            }
+            else
+            {
+                ClickOutside();
             }
 
             //RaycastHit[] hits = Physics.RaycastAll(ray, 100,);
@@ -119,7 +136,7 @@ public class TestMyStackController : MonoBehaviour
                 var controller = hit.transform.GetComponent<JengaBoxController>();
                 if (controller)
                 {
-                    Highlight(controller.Data, true);
+                    Highlight(controller, true);
                 }
                 else
                 {
@@ -134,47 +151,81 @@ public class TestMyStackController : MonoBehaviour
     }
 
 
-    private void ClickCallback(StackApiRequest.StackApiDataElement obj)
+    private void ClickCallback(JengaBoxController controller)
     {
+        if (_selected == controller)
+        {
+            ClickOutside();
+            return;
+        }
+        ClickOutside();
         Debug.Log("Click", this);
-        _boxInfoController.Set(obj);
-        _selected = obj;
+        SetHighlighted(null);
+        _boxInfoController.Set(controller.Data, ClickOutside);
+        _selected = controller;
+        controller.SetOutline(1);
     }
 
-    private void Highlight(StackApiRequest.StackApiDataElement obj, bool active)
+    private void Highlight(JengaBoxController controller, bool active)
     {
         if (active)
         {
-            if (_selected == null)
+            if (_selected == null || _selected != controller)
             {
-                _boxInfoController.Set(obj);
-                _highlighted = obj;
+                SetHighlighted(controller);
             }
             else
             {
-                _highlighted = null;
+                SetHighlighted(null);
             }
         }
         else
         {
             if (_selected == null)
             {
-                _boxInfoController.Hide();
-                _highlighted = null;
+                SetHighlighted(null);
             }
             else
             {
-                _highlighted = null;
+                SetHighlighted(null);
             }
         }
     }
 
     private void ClickOutside()
     {
+        Debug.Log("Clicked outside");
         if (_selected != null)
         {
             _boxInfoController.Hide();
+            _selected.SetOutline(-1);
             _selected = null;
+        }
+    }
+
+    private void SetHighlighted(JengaBoxController controller)
+    {
+        if (_highlighted == controller)
+            return;
+
+        if (_highlighted)
+            _highlighted.SetOutline(-1);
+        _highlighted = null;
+        if (!_selected)
+            if (controller)
+            {
+                _highlighted = controller;
+                controller.SetOutline(0);
+                _boxInfoController.Set(controller.Data, ClickOutside);
+            }
+            else
+            {
+                _boxInfoController.Hide();
+            }
+        else if (controller && _highlightWhileSelected)
+        {
+            _highlighted = controller;
+            controller.SetOutline(0);
         }
     }
 
