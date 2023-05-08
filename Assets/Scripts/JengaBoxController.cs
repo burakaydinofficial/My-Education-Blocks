@@ -11,6 +11,7 @@ public class JengaBoxController : MonoBehaviour
     [SerializeField] private MeshRenderer _renderer;
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Outline _outline;
+    [SerializeField] private Collider _physicsCollider;
 
     public StackApiDataElement Data { get; private set; }
     private Action<JengaBoxController> _clickCallback;
@@ -24,6 +25,12 @@ public class JengaBoxController : MonoBehaviour
     public void Set(bool kinematic)
     {
         _rigidbody.isKinematic = kinematic;
+
+        if (!kinematic)
+        {
+            if (Data.mastery == 0)
+                Hide();
+        }
     }
 
     public void Set(StackApiDataElement data, Action<JengaBoxController> clickCallback)
