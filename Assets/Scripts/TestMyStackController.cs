@@ -16,8 +16,9 @@ public class TestMyStackController : MonoBehaviour
     [SerializeField] private JengaBoxManager _8ThGradeJengaBoxManager;
 
     [SerializeField] BoxInfoController _boxInfoController;
+    [SerializeField] private LayerMask _clickLayerMask;
 
-    public IEnumerator Start()
+    private IEnumerator Start()
     {
         _starting = true;
         SetErrorScreen(false);
@@ -61,6 +62,42 @@ public class TestMyStackController : MonoBehaviour
         _started = true;
         _starting = false;
     }
+
+    private void Update()
+    {
+        if (_started && !_starting)
+            CheckClicks();
+    }
+
+    private void CheckClicks()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100, _clickLayerMask))
+            {
+                var controller = hit.transform.GetComponent<JengaBoxController>();
+                if (controller)
+                {
+                    ClickCallback(controller.Data);
+                }
+                else
+                {
+                    Debug.LogError("Raycast interrupted");
+                }
+            }
+
+            //RaycastHit[] hits = Physics.RaycastAll(ray, 100,);
+
+            //foreach (var raycastHit in hits)
+            //{
+
+            //}
+        }
+    }
+
 
     private void ClickCallback(StackApiRequest.StackApiDataElement obj)
     {

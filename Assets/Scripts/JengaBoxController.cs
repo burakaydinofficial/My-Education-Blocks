@@ -8,14 +8,20 @@ public class JengaBoxController : MonoBehaviour
     [SerializeField] private bool _hideOnAwake = true;
     [SerializeField] private JengaBoxConfig _config;
     [SerializeField] private MeshRenderer _renderer;
+    [SerializeField] private Rigidbody _rigidbody;
 
-    private StackApiDataElement _data;
+    public StackApiDataElement Data { get; private set; }
     private Action<StackApiDataElement> _clickCallback;
 
     private void Awake()
     {
         if (_hideOnAwake)
             Hide();
+    }
+
+    public void Set(bool kinematic)
+    {
+        _rigidbody.isKinematic = kinematic;
     }
 
     public void Set(StackApiDataElement data, Action<StackApiDataElement> clickCallback)
@@ -25,15 +31,17 @@ public class JengaBoxController : MonoBehaviour
             Debug.LogError("Config is missing");
         }
 
-        _data = data;
+        Data = data;
         _clickCallback = clickCallback;
 
+        Set(true);
         gameObject.SetActive(true);
         var mat = _config.GetMaterial(data.mastery);
         if (mat)
-            _renderer.materials[0] = mat;
+            _renderer.material = mat;
         else
             Debug.LogError("There is no material matching mastery " + data.mastery);
+        _rigidbody.mass = _config.GetWeight(data.mastery);
     }
 
     public void Hide()
@@ -43,6 +51,6 @@ public class JengaBoxController : MonoBehaviour
 
     public void Click()
     {
-        _clickCallback?.Invoke(_data);
+        _clickCallback?.Invoke(Data);
     }
 }
