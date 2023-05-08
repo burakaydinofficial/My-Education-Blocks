@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b87e5c3584ac2a48b742c9facaf0491, type: 3}
+  m_Name: JengaBoxConfig
+  m_EditorClassIdentifier: 
+  _materials:
+  - {fileID: 2100000, guid: 60372be23f238704a82915a514ef3df3, type: 2}
+  - {fileID: 2100000, guid: 1a36a200bbc0f6644b2d1e5f6f146398, type: 2}
+  - {fileID: 2100000, guid: 1a36a200bbc0f6644b2d1e5f6f146398, type: 2}

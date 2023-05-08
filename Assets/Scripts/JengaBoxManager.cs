@@ -29,6 +29,7 @@ public class JengaBoxManager : MonoBehaviour
                 var position = _layerOffset * layer + ((inLayer - 1) * _rowOffset);
                 newInstance.transform.localPosition = position;
                 newInstance.transform.localEulerAngles = new Vector3(0f, (layer % 2) * 90f, 0f);
+                _instances.Add(newInstance.GetComponent<JengaBoxController>());
             }
 
             _instances[instanceIndex].Set(element, clickCallback);
