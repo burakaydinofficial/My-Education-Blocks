@@ -27,12 +27,12 @@ public class CameraController : MonoBehaviour
 	[SerializeField] private Rect _rotationRange = Rect.MinMaxRect(-720f, -90f, 720f, 90f);
     [SerializeField] private float _rotationDamp = 0.5f;
 
-    [SerializeField] private float _targetDistance;
-    [SerializeField] private float _currentDistance;
+    [NonSerialized] private float _targetDistance;
+    [NonSerialized] private float _currentDistance;
     [NonSerialized] private float _distanceVelocity;
 
-    [SerializeField] private Vector2 _targetRotation;
-	[SerializeField] private Vector2 _currentRotation;
+    [NonSerialized] private Vector2 _targetRotation;
+	[NonSerialized] private Vector2 _currentRotation;
     [NonSerialized] private Vector2 _rotationVelocity;
 
     [NonSerialized] private Vector2? _previousMousePosition;

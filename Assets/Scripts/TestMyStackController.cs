@@ -69,10 +69,19 @@ public class TestMyStackController : MonoBehaviour
             CheckClicks();
     }
 
+    private int _clickDownFrame = -1;
     private void CheckClicks()
     {
         if (Input.GetMouseButtonDown(0))
+            _clickDownFrame = Time.frameCount;
+
+        if (Input.GetMouseButtonUp(0))
         {
+            int frame = Time.frameCount;
+
+            if (frame - _clickDownFrame > 5)
+                return;
+
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -101,6 +110,7 @@ public class TestMyStackController : MonoBehaviour
 
     private void ClickCallback(StackApiRequest.StackApiDataElement obj)
     {
+        Debug.Log("Click");
         _boxInfoController.Set(obj);
     }
 
