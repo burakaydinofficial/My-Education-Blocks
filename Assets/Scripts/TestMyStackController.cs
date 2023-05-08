@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -17,6 +18,9 @@ public class TestMyStackController : MonoBehaviour
 
     [SerializeField] BoxInfoController _boxInfoController;
     [SerializeField] private LayerMask _clickLayerMask;
+
+    [NonSerialized] private StackApiRequest.StackApiDataElement _selected;
+    [NonSerialized] private StackApiRequest.StackApiDataElement _highlighted;
 
     private IEnumerator Start()
     {
@@ -105,13 +109,73 @@ public class TestMyStackController : MonoBehaviour
 
             //}
         }
+        else
+        {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100, _clickLayerMask))
+            {
+                var controller = hit.transform.GetComponent<JengaBoxController>();
+                if (controller)
+                {
+                    Highlight(controller.Data, true);
+                }
+                else
+                {
+                    Debug.LogError("Raycast interrupted");
+                }
+            }
+            else
+            {
+                Highlight(null, false);
+            }
+        }
     }
 
 
     private void ClickCallback(StackApiRequest.StackApiDataElement obj)
     {
-        Debug.Log("Click");
+        Debug.Log("Click", this);
         _boxInfoController.Set(obj);
+        _selected = obj;
+    }
+
+    private void Highlight(StackApiRequest.StackApiDataElement obj, bool active)
+    {
+        if (active)
+        {
+            if (_selected == null)
+            {
+                _boxInfoController.Set(obj);
+                _highlighted = obj;
+            }
+            else
+            {
+                _highlighted = null;
+            }
+        }
+        else
+        {
+            if (_selected == null)
+            {
+                _boxInfoController.Hide();
+                _highlighted = null;
+            }
+            else
+            {
+                _highlighted = null;
+            }
+        }
+    }
+
+    private void ClickOutside()
+    {
+        if (_selected != null)
+        {
+            _boxInfoController.Hide();
+            _selected = null;
+        }
     }
 
     public void Restart()
