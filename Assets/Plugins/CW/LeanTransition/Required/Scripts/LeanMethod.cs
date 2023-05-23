@@ -307,6 +307,8 @@ namespace Lean.Transition.Editor
 						if (GUI.Button(rectC, new GUIContent("fill", "Copy the current value from the Target into this component?"), EditorStyles.miniButton) == true)
 						{
 							state.Fill();
+							if (sTarget?.serializedObject?.targetObject)
+							    EditorUtility.SetDirty(sTarget.serializedObject.targetObject);
 						}
 					EndDisabled();
 				}
@@ -385,6 +387,7 @@ namespace Lean.Transition.Editor
 					if (GUI.Button(rect, new GUIContent("auto fill", "Copy the current value from the scene into this component?"), EditorStyles.miniButton) == true)
 					{
 						state.Fill();
+						EditorUtility.SetDirty(tgt);
 					}
 				EndDisabled();
 			}
