@@ -7,8 +7,8 @@ PhysicMaterial:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: JengaBoxPhysicMaterial
-  dynamicFriction: 0.1
-  staticFriction: 0.1
-  bounciness: 0.1
+  dynamicFriction: 0.08
+  staticFriction: 0.08
+  bounciness: 0.08
   frictionCombine: 0
   bounceCombine: 0

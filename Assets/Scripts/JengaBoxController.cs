@@ -12,6 +12,11 @@ public class JengaBoxController : MonoBehaviour
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Outline _outline;
     [SerializeField] private Collider _physicsCollider;
+    [SerializeField] private TMPro.TextMeshPro[] _texts;
+    [SerializeField] private string[] _masterTexts = new string[]
+    {
+        "", "LEARNED", "MASTERED"
+    };
 
     public StackApiDataElement Data { get; private set; }
     private Action<JengaBoxController> _clickCallback;
@@ -45,6 +50,13 @@ public class JengaBoxController : MonoBehaviour
 
         Set(true);
         gameObject.SetActive(true);
+        var text = _masterTexts.Length > data.mastery ? _masterTexts[data.mastery] : "";
+        for (var i = 0; i < _texts.Length; i++)
+        {
+            if (_texts[i])
+                _texts[i].text = text;
+        }
+
         var mat = _config.GetMaterial(data.mastery);
         if (mat)
             _renderer.material = mat;
