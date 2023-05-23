@@ -154,14 +154,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _loadingScreenRoot: {fileID: 1862931160}
   _errorScreenRoot: {fileID: 495688878}
-  _6ThGradeJengaBoxManager: {fileID: 593728595}
-  _7ThGradeJengaBoxManager: {fileID: 1665359918}
-  _8ThGradeJengaBoxManager: {fileID: 1558197692}
+  _stageRoot: {fileID: 114256563}
+  _stagePrefab: {fileID: 2012491422119495475, guid: bfe0a5f42edf6c74da023f0ec786317e, type: 3}
   _boxInfoController: {fileID: 1197535265}
   _clickLayerMask:
     serializedVersion: 2
     m_Bits: 65536
   _highlightWhileSelected: 1
+  _turnTablePosition: 0
 --- !u!4 &114256563
 Transform:
   m_ObjectHideFlags: 0
@@ -173,13 +173,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 593728596}
-  - {fileID: 1665359919}
-  - {fileID: 1558197693}
-  - {fileID: 380879062}
+  m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3 
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &145903728
 GameObject:
@@ -483,13 +479,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380879061}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 114256563}
-  m_RootOrder: 3
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &495688878
 GameObject:
@@ -595,7 +591,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &543922278
 GameObject:
@@ -665,55 +661,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
---- !u!1 &593728594
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 593728596}
-  - component: {fileID: 593728595}
-  m_Layer: 0
-  m_Name: JengaManager6th
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &593728595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 593728594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e14069ac71e46344a84460660c857df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _root: {fileID: 593728596}
-  _layerOffset: {x: 0, y: 1.5, z: 0}
-  _rowOffset: {x: 0, y: 0, z: 2.5}
-  _jengaBoxPrefab: {fileID: 9213471192969078923, guid: 0ac6f1548e15de142888e2d23c7d4d53, type: 3}
-  _gradeTag: 6th Grade
---- !u!4 &593728596
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 593728594}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 114256563}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &698783535
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1093,7 +1040,7 @@ RectTransform:
   - {fileID: 495688879}
   - {fileID: 920707536}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2024,55 +1971,6 @@ RectTransform:
   m_AnchoredPosition: {x: -40, y: 0}
   m_SizeDelta: {x: 320, y: 480}
   m_Pivot: {x: 1, y: 0.5}
---- !u!1 &1558197691
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1558197693}
-  - component: {fileID: 1558197692}
-  m_Layer: 0
-  m_Name: JengaManager8th
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1558197692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1558197691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e14069ac71e46344a84460660c857df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _root: {fileID: 1558197693}
-  _layerOffset: {x: 0, y: 1.5, z: 0}
-  _rowOffset: {x: 0, y: 0, z: 2.5}
-  _jengaBoxPrefab: {fileID: 9213471192969078923, guid: 0ac6f1548e15de142888e2d23c7d4d53, type: 3}
-  _gradeTag: 8th Grade
---- !u!4 &1558197693
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1558197691}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 114256563}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1579403095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2478,55 +2376,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636050259}
   m_CullTransparentMesh: 1
---- !u!1 &1665359917
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1665359919}
-  - component: {fileID: 1665359918}
-  m_Layer: 0
-  m_Name: JengaManager7th
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1665359918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665359917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e14069ac71e46344a84460660c857df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _root: {fileID: 1665359919}
-  _layerOffset: {x: 0, y: 1.5, z: 0}
-  _rowOffset: {x: 0, y: 0, z: 2.5}
-  _jengaBoxPrefab: {fileID: 9213471192969078923, guid: 0ac6f1548e15de142888e2d23c7d4d53, type: 3}
-  _gradeTag: 7th Grade
---- !u!4 &1665359919
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665359917}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 114256563}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1665386619
 GameObject:
   m_ObjectHideFlags: 0
