@@ -74,6 +74,28 @@ public class JengaBoxManager : MonoBehaviour
         Tested = true;
     }
 
+    public void Freeze()
+    {
+        if (Tested)
+        {
+            foreach (var instance in _instances)
+            {
+                instance.Set(true);
+            }
+        }
+    }
+
+    public void ResetFreeze()
+    {
+        if (Tested)
+        {
+            foreach (var instance in _instances)
+            {
+                instance.Set(false);
+            }
+        }
+    }
+
     public void Hide()
     {
         foreach (var jengaBoxController in _instances)

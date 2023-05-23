@@ -46,7 +46,7 @@ public class TurnTable
 
     private float _positionTarget = 0f;
     private float _position = 0f;
-    private float _positionVel = 0f;
+    public float PositionVel;
 
     public void SetPosition(float angle, bool instant = false)
     {
@@ -54,14 +54,14 @@ public class TurnTable
         if (instant)
         {
             _position = angle;
-            _positionVel = 0f;
+            PositionVel = 0f;
             UpdatePosition();
         }
     }
 
     public void UpdatePosition()
     {
-        _position = Mathf.SmoothDampAngle(_position, _positionTarget, ref _positionVel, 0.5f);
+        _position = Mathf.SmoothDampAngle(_position, _positionTarget, ref PositionVel, 0.5f);
         foreach (var turnTableElement in _elements)
         {
             turnTableElement.Position(_position + (AngleRange * 0.5f));
@@ -208,6 +208,20 @@ public class TestMyStackController : MonoBehaviour
     [NonSerialized] private int _selectionIndex = 0;
     private void Select(int index)
     {
+        if (_selectionIndex != index)
+        {
+            if (_boxManagers[_selectionIndex].Tested)
+            {
+                _boxManagers[_selectionIndex].Freeze();
+            }
+
+            if (_boxManagers[index].Tested)
+            {
+                _boxManagers[index].ResetFreeze();
+            }
+
+            ClickOutside();
+        }
         _selectionIndex = index;
         _turnTable.Select(index);
     }
@@ -229,7 +243,14 @@ public class TestMyStackController : MonoBehaviour
         if (_started && !_starting)
             CheckClicks();
 
-        _turnTable?.UpdatePosition();
+        if (_turnTable != null)
+        {
+            _turnTable.UpdatePosition();
+            if (_turnTable.PositionVel > 0.01f)
+                _boxManagers[_selectionIndex].Freeze();
+            else
+                _boxManagers[_selectionIndex].ResetFreeze();
+        }
     }
 
     public void Test()
