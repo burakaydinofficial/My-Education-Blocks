@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -11,13 +12,17 @@ public class TurnTable
     private readonly float _radius;
     private readonly int _count;
     private readonly List<TurnTableElement> _elements = new List<TurnTableElement>();
+    private readonly Vector3 _baseVector;
 
-    public TurnTable(Transform root, float angleRange, float radius, int count)
+    public TurnTable(Transform root, float angleRange, float radius, int count, Vector3 baseVector)
     {
         _root = root;
         AngleRange = angleRange;
         _radius = radius;
         _count = count;
+        _baseVector = baseVector;
+
+        _root.transform.localPosition = _baseVector * _radius;
     }
 
     public TurnTableElement Deploy(Transform t, int index)
@@ -33,19 +38,34 @@ public class TurnTable
         return Deploy(t, _elements.Count);
     }
 
-    public void Select(int index)
+    public void Select(int index, bool instant = false)
     {
-        Position(-CalculateAngle(index));
+        SetPosition(CalculateAngle(_count - index - 1), instant);
     }
 
-    public void Position(float angle)
+
+    private float _positionTarget = 0f;
+    private float _position = 0f;
+    private float _positionVel = 0f;
+
+    public void SetPosition(float angle, bool instant = false)
     {
+        _positionTarget = angle;
+        if (instant)
+        {
+            _position = angle;
+            _positionVel = 0f;
+            UpdatePosition();
+        }
+    }
+
+    public void UpdatePosition()
+    {
+        _position = Mathf.SmoothDampAngle(_position, _positionTarget, ref _positionVel, 0.5f);
         foreach (var turnTableElement in _elements)
         {
-            turnTableElement.Position(angle + (AngleRange * 0.5f));
+            turnTableElement.Position(_position + (AngleRange * 0.5f));
         }
-
-        _root.transform.localPosition = SamplePoint(AngleRange * 0.5f, _radius);
     }
 
     private float CalculateAngle(int index)
@@ -95,7 +115,7 @@ public class TestMyStackController : MonoBehaviour
     [SerializeField] private Transform _stageRoot;
     [SerializeField] private GameObject _stagePrefab;
 
-    [NonSerialized] private Dictionary<string, JengaBoxManager> _boxManagers = new Dictionary<string, JengaBoxManager>();
+    [NonSerialized] private List<JengaBoxManager> _boxManagers = new List<JengaBoxManager>();
 
     [SerializeField] BoxInfoController _boxInfoController;
     [SerializeField] private LayerMask _clickLayerMask;
@@ -109,6 +129,9 @@ public class TestMyStackController : MonoBehaviour
 
     [Range(0f, 1f)]
     [SerializeField] private float _turnTablePosition = 0f;
+    [SerializeField] private int _turnTableIndex = 0;
+
+    [SerializeField] private TopMenuManager _topMenuManager;
 
     private IEnumerator Start()
     {
@@ -153,8 +176,8 @@ public class TestMyStackController : MonoBehaviour
             grades.Add(stackApiDataElement.grade);
         }
 
-        _turnTable = new TurnTable(_stageRoot, 180f, grades.Count * 30f, grades.Count);
-        
+        _turnTable = new TurnTable(_stageRoot, 180f, grades.Count * 30f, grades.Count, Vector3.forward);
+
         foreach (var grade in grades)
         {
             var go = Instantiate(_stagePrefab, _stageRoot, false);
@@ -162,18 +185,29 @@ public class TestMyStackController : MonoBehaviour
             _turnTable.Deploy(go.transform);
 
             var manager = go.GetComponent<JengaBoxManager>();
-            _boxManagers[grade] = manager;
+            _boxManagers.Add(manager);
             manager.Set(_data, ClickCallback, grade);
         }
 
+        _turnTable.Select(0, true);
         SetLoadingScreen(false);
+        if (_topMenuManager)
+            _topMenuManager.Set(grades.ToArray(), Select);
 
         _started = true;
         _starting = false;
     }
 
+    private void Select(string obj)
+    {
+        var index = _boxManagers.FindIndex(x => x.GradeTag == obj);
+        _turnTable.Select(index);
+    }
+
     private static int Sorter(StackApiRequest.StackApiDataElement e1, StackApiRequest.StackApiDataElement e2)
     {
+        var g = string.CompareOrdinal(e1.grade, e2.grade);
+        if (g != 0) return g;
         var d = string.CompareOrdinal(e1.domain, e2.domain);
         if (d != 0) return d;
         var c = string.CompareOrdinal(e1.cluster, e2.cluster);
@@ -187,8 +221,7 @@ public class TestMyStackController : MonoBehaviour
         if (_started && !_starting)
             CheckClicks();
 
-        if (_turnTable != null)
-            _turnTable.Position(Mathf.Lerp(0f, _turnTable.AngleRange, _turnTablePosition));
+        _turnTable?.UpdatePosition();
     }
 
     private int _clickDownFrame = -1;

@@ -14,7 +14,7 @@ public class JengaBoxManager : MonoBehaviour
     [SerializeField, FormerlySerializedAs("_gradeTag")] private string _defaultGradeTag = "6th Grade";
     [SerializeField] private TextMeshProUGUI _tagText;
 
-    [NonSerialized] private string m_gradeTag;
+    public string GradeTag { get; private set; }
     [NonSerialized] private List<JengaBoxController> _instances = new List<JengaBoxController>();
 
     public void Set(StackApiRequest.StackApiDataElement[] data, Action<JengaBoxController> clickCallback, string gradeTag = null)
@@ -23,13 +23,13 @@ public class JengaBoxManager : MonoBehaviour
 
         var rotatedRowOffset = new Vector3(_rowOffset.z, _rowOffset.y, _rowOffset.x);
 
-        m_gradeTag = gradeTag ?? _defaultGradeTag;
-        Debug.Log("Initializing " + m_gradeTag);
+        GradeTag = gradeTag ?? _defaultGradeTag;
+        Debug.Log("Initializing " + GradeTag);
 
         for (var i = 0; i < data.Length; i++)
         {
             var element = data[i];
-            if (!string.Equals(element.grade, m_gradeTag))
+            if (!string.Equals(element.grade, GradeTag))
                 continue;
 
             if (instanceIndex >= _instances.Count)
@@ -49,7 +49,7 @@ public class JengaBoxManager : MonoBehaviour
         }
 
         if (_tagText)
-            _tagText.text = m_gradeTag;
+            _tagText.text = GradeTag;
     }
 
     public void Hide()
