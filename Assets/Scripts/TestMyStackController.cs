@@ -190,6 +190,7 @@ public class TestMyStackController : MonoBehaviour
         }
 
         _turnTable.Select(0, true);
+        Select(0);
         SetLoadingScreen(false);
         if (_topMenuManager)
             _topMenuManager.Set(grades.ToArray(), Select);
@@ -201,6 +202,13 @@ public class TestMyStackController : MonoBehaviour
     private void Select(string obj)
     {
         var index = _boxManagers.FindIndex(x => x.GradeTag == obj);
+        Select(index);
+    }
+
+    [NonSerialized] private int _selectionIndex = 0;
+    private void Select(int index)
+    {
+        _selectionIndex = index;
         _turnTable.Select(index);
     }
 
@@ -222,6 +230,14 @@ public class TestMyStackController : MonoBehaviour
             CheckClicks();
 
         _turnTable?.UpdatePosition();
+    }
+
+    public void Test()
+    {
+        var target = _boxManagers[_selectionIndex];
+        if (target.Tested)
+            target.Set(_data, ClickCallback, target.GradeTag);
+        else target.Test();
     }
 
     private int _clickDownFrame = -1;

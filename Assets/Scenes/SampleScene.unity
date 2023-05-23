@@ -3668,6 +3668,50 @@ PrefabInstance:
       propertyPath: expectedInteractable
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3949292152164928291, guid: b13a23b3afdc71f429090cdf68f985d3, type: 3}
+      propertyPath: interactableTransitions.entries.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949292152164928291, guid: b13a23b3afdc71f429090cdf68f985d3, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949292152164928291, guid: b13a23b3afdc71f429090cdf68f985d3, type: 3}
+      propertyPath: nonInteractableTransitions.entries.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949292152164928291, guid: b13a23b3afdc71f429090cdf68f985d3, type: 3}
+      propertyPath: interactableTransitions.entries.Array.data[0].speed
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949292152164928291, guid: b13a23b3afdc71f429090cdf68f985d3, type: 3}
+      propertyPath: nonInteractableTransitions.entries.Array.data[0].speed
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949292152164928291, guid: b13a23b3afdc71f429090cdf68f985d3, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949292152164928291, guid: b13a23b3afdc71f429090cdf68f985d3, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 114256562}
+    - target: {fileID: 3949292152164928291, guid: b13a23b3afdc71f429090cdf68f985d3, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949292152164928291, guid: b13a23b3afdc71f429090cdf68f985d3, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Test
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949292152164928291, guid: b13a23b3afdc71f429090cdf68f985d3, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TestMyStackController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949292152164928291, guid: b13a23b3afdc71f429090cdf68f985d3, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3949292152164928293, guid: b13a23b3afdc71f429090cdf68f985d3, type: 3}
       propertyPath: m_Name
       value: Tap Button (LeanButton)

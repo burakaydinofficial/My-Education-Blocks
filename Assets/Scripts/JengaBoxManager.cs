@@ -32,17 +32,22 @@ public class JengaBoxManager : MonoBehaviour
             if (!string.Equals(element.grade, GradeTag))
                 continue;
 
+            var layer = instanceIndex / 3;
+            var inLayer = instanceIndex % 3;
+            var rowOffsetForLayer = (layer % 2 == 0 ? _rowOffset : rotatedRowOffset);
+            var position = _baseOffset + _layerOffset * layer + (inLayer - 1) * rowOffsetForLayer;
+            JengaBoxController instance;
             if (instanceIndex >= _instances.Count)
             {
-                var newInstance = Instantiate(_jengaBoxPrefab, _root, false);
-                var layer = instanceIndex / 3;
-                var inLayer = instanceIndex % 3;
-                var rowOffsetForLayer = (layer % 2 == 0 ? _rowOffset : rotatedRowOffset);
-                var position = _baseOffset + _layerOffset * layer + (inLayer - 1) * rowOffsetForLayer;
-                newInstance.transform.localPosition = position;
-                newInstance.transform.localEulerAngles = new Vector3(0f, (layer % 2) * 90f, 0f);
-                _instances.Add(newInstance.GetComponent<JengaBoxController>());
+                instance = Instantiate(_jengaBoxPrefab, _root, false).GetComponent<JengaBoxController>();
+                _instances.Add(instance);
             }
+            else
+            {
+                instance = _instances[instanceIndex];
+            }
+            instance.transform.localPosition = position;
+            instance.transform.localEulerAngles = new Vector3(0f, (layer % 2) * 90f, 0f);
 
             _instances[instanceIndex].Set(element, clickCallback);
             instanceIndex++;
@@ -50,6 +55,23 @@ public class JengaBoxManager : MonoBehaviour
 
         if (_tagText)
             _tagText.text = GradeTag;
+
+        Tested = false;
+    }
+
+    public bool Tested { get; private set; }
+
+    public void Test()
+    {
+        foreach (var instance in _instances)
+        {
+            instance.Set(false);
+            if (instance.Data.mastery == 0)
+            {
+                instance.Hide();
+            }
+        }
+        Tested = true;
     }
 
     public void Hide()
